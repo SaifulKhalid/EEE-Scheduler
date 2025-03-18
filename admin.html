@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Panel</h1>
+    <form id="admin-form">
+      <label for="day">Day of the Week:</label>
+      <select id="day">
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+      </select>
+      <br><br>
+      <label for="schedule">New Schedule (comma-separated):</label>
+      <input type="text" id="schedule" placeholder="e.g., Math - 9:00 AM, Physics - 11:00 AM">
+      <br><br>
+      <button type="submit">Update Schedule</button>
+    </form>
+    <p id="status"></p>
+  </div>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

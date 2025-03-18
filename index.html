@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Routine</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Today's Schedule</h1>
+    <div id="schedule">
+      <!-- Schedule will be dynamically updated here -->
+    </div>
+    <footer>
+      <p>Stay productive, Khalid! 😊</p>
+    </footer>
+  </div>
+
+  <!-- Firebase and Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDxjJ-mUtB-fZi4J3NInpeQUhR0SRl2B5M",
+      authDomain: "eee-class-scheduler.firebaseapp.com",
+      databaseURL: "https://eee-class-scheduler-default-rtdb.firebaseio.com",
+      projectId: "eee-class-scheduler",
+      storageBucket: "eee-class-scheduler.firebasestorage.app",
+      messagingSenderId: "178434897950",
+      appId: "1:178434897950:web:674fdf88b0fce23517960f",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Get today's schedule
+    const today = new Date().toLocaleString("en-us", { weekday: "long" });
+    const scheduleRef = ref(database, `schedule/${today}`);
+
+    // Update schedule in the DOM
+    const scheduleDiv = document.getElementById("schedule");
+
+    onValue(scheduleRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const schedule = snapshot.val();
+        scheduleDiv.innerHTML = `
+          <h2>${today}</h2>
+          <ul>${schedule.map(item => `<li>${item}</li>`).join("")}</ul>
+        `;
+      } else {
+        scheduleDiv.innerHTML = "<p>No classes today! Enjoy your day off. 😊</p>";
+      }
+    }, (error) => {
+      console.error("Error fetching data:", error);
+      scheduleDiv.innerHTML = "<p>Failed to load schedule. Please try again later.</p>";
+    });
+  </script>
+</body>
+</html>
